@@ -1,8 +1,8 @@
-import random
-
 from selenium import webdriver
+from selenium.webdriver import ActionChains, Keys
 from selenium.webdriver.common.by import By
 import time
+import random
 
 URL = "https://forms.yandex.ru/cloud/657ada9e84227c84c114f76b/"
 options = webdriver.ChromeOptions()
@@ -39,7 +39,7 @@ try:
     driver.find_element(By.XPATH, f"//p[contains(text(), '{random_study}')]").click()
 
     # choise random exp on second page
-    list_exp = ['меньше 1 года', '1-3 года', '3-5 лет', '5-10 лет', 'более 10 лет']
+    list_exp = ['менее 1 года', '1-3 года', '3-5 лет', '5-10 лет', 'более 10 лет']
     random_exp = random.choice(list_exp)
     driver.find_element(By.XPATH, f"//p[contains(text(), '{random_exp}')]").click()
 
@@ -162,6 +162,7 @@ try:
         for count_i_reason in random_prioritet:
             driver.find_element(By.XPATH, f"//p[contains(text(), '{count_i_reason}')]").click()
 
+    #FOURTH PAGE
     # push to button from third page to fourth page
     driver.find_element(By.XPATH, '//*[@id="root"]/div/main/form/div/div[7]/button[2]').click()
 
@@ -181,7 +182,18 @@ try:
     # push to button from fourth to fifth page
     driver.find_element(By.XPATH, '//*[@id="root"]/div/main/form/div/div[4]/button[2]').click()
 
-    driver.find_element(By.XPATH, '//*[@id="root"]/div/main/form/div/div[1]/div/div[1]/div/button').send_keys('7')
+    # FIFTH PAGE
+    # choice of assessment
+    driver.find_element(By.XPATH, '//*[@id="root"]/div/main/form/div/div[1]/div/div[1]/div/button').click()
+    action = ActionChains(driver)
+    random_assessment = random.randint(1, 10)
+    for i in range(random_assessment):
+        action.send_keys(Keys.ARROW_DOWN)
+    action.send_keys(Keys.ENTER)
+    action.perform()
+
+    # push to button to final page
+    driver.find_element(By.XPATH, '//*[@id="root"]/div/main/form/div/div[3]/button[2]').click()
     time.sleep(3)
 except Exception as ex:
     print(ex)
