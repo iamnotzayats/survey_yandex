@@ -11,10 +11,15 @@ def initial_test():
     try:
         URL = "https://forms.yandex.ru/cloud/657ada9e84227c84c114f76b/"
         options = webdriver.ChromeOptions()
-        options.add_argument("--disable-blink-features=AutomationControlled")
+        #options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        #options.add_argument('--remote-allow-origins=*')
+        options.add_argument("user-data-dir=C:\\Users\\\ZayatsAS\\AppData\\Local\\Google\\Chrome\\User Data")
+        options.add_argument("profile-directory=Default")
         driver = webdriver.Chrome(options=options)
         driver.get(url=URL)
-        time.sleep(3)
+        time.sleep(4)
         # FIRST PAGE
         # push to button 'Далее' on first page
         driver.find_element(By.XPATH, '//*[@id="root"]/div/main/form/div/div[3]/button').click()
@@ -36,7 +41,7 @@ def initial_test():
         driver.find_element(By.XPATH, f"//p[contains(text(), '{random_age}')]").click()
 
         # choise random study on second page
-        list_study = ['среднее', 'среднее профессиональное', 'неоконченное высшее', 'высшее']
+        list_study = ['среднее профессиональное', 'неоконченное высшее', 'высшее']
         random_study = random.choice(list_study)
         driver.find_element(By.XPATH, f"//p[contains(text(), '{random_study}')]").click()
 
@@ -46,10 +51,7 @@ def initial_test():
         driver.find_element(By.XPATH, f"//p[contains(text(), '{random_exp}')]").click()
 
         # choise job title on second page
-        list_job_title = ['руководитель высшего звена (директор, зам. директора)',
-                          'руководитель среднего звена (начальник цеха/отдела и т.п.)',
-                          'руководитель низшего звена (начальник бюро, мастер и т.п.)',
-                          'инженерно-технический работник', 'основной производственный рабочий',
+        list_job_title = ['инженерно-технический работник', 'основной производственный рабочий',
                           'вспомогательный производственный рабочий', 'иное']
         random_job_title = random.choice(list_job_title)
         driver.find_element(By.XPATH, f"//p[contains(text(), '{random_job_title}')]").click()
@@ -73,16 +75,13 @@ def initial_test():
         list_answer_trade_union = ['Да', 'Нет']
         random_answer_trade_union = random.choice(list_answer_trade_union)
         driver.find_element(By.XPATH, f"//p[contains(text(), '{random_answer_trade_union}')]").click()
-        time.sleep(4)
+        time.sleep(3)
 
         # choise yes or not in input trade union
         if random_answer_trade_union == 'Да':
             # choise role in trade union
             list_role_trade_union = ['рядовой член профсоюза',
-                                     'профсоюзный активист (участник и/или организатор мероприятий)',
-                                     'занимаю выборную должность (председатель или заместитель председателя ППОО, председатель (заместитель председателя) цеховой профорганизации, профгрупорг)',
-                                     'член выборного органа (член профкома/цехкома), член комиссии профкома',
-                                     'штатный работник профсоюзной организации']
+                                     'профсоюзный активист (участник и/или организатор мероприятий)']
             random_role_trade_union = random.choice(list_role_trade_union)
             driver.find_element(By.XPATH, f"//p[contains(text(), '{random_role_trade_union}')]").click()
 
